@@ -6,17 +6,30 @@ class Controller {
   ViewModel get model => _model;
 
   void getData() async {
-    await Future.delayed(Duration(seconds: 2));
-    model.playerModel.name = 'malucao';
+    _model.setPlayer = PlayerModel('unknwon', 'unknown');
   }
 
   void savePlayer(String name) async {
-    await Future.delayed(Duration(seconds: 2));
-    _model.playerModel = PlayerModel()..name = name;
+    _model.setPlayer = PlayerModel(_model.getPlayer.value.id, name);
   }
 
   void changeName(String newName) async {
-    Future.delayed(Duration(seconds: 1))
-        .then((value) => _model.playerModel.name = newName);
+    _model.getPlayer.value.name = newName;
+  }
+
+  void isWaitingAudio() {
+    _model.audioModel.isWaiting = true;
+  }
+
+  void isNotWaitingAudio() {
+    _model.audioModel.isWaiting = false;
+  }
+
+  void changeURL(String url) {
+    _model.audioModel.url = url;
+  }
+
+  void changeFailure(String newValue) {
+    _model.audioModel.failure = newValue;
   }
 }

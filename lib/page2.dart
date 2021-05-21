@@ -21,9 +21,7 @@ class Page2 extends StatelessWidget {
                 onTap: () => Get.find<Controller>().savePlayer('Josinaldo'),
                 child: Container(
                   color: Colors.white54,
-                  child: GetBuilder<ViewModel>(builder: (_) {
-                    return Text(_.playerModel.name);
-                  }),
+                  child: Obx(() => Text(ViewModel.i.getPlayer.value.name)),
                 ),
               ),
             ),
