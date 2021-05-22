@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:language_test/controllers/controller.dart';
-import 'package:language_test/page2.dart';
-import 'package:language_test/viewModel.dart';
+import 'package:language_test/get/page2.dart';
+import 'package:language_test/get/viewModel.dart';
 
 class StartUpPage extends StatelessWidget {
   onChange(bool isWaiting) {

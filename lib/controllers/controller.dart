@@ -1,4 +1,4 @@
-import 'package:language_test/viewModel.dart';
+import 'package:language_test/get/viewModel.dart';
 
 class Controller {
   ViewModel _model = ViewModel();

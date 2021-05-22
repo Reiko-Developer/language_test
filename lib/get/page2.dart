@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:language_test/controllers/controller.dart';
-import 'package:language_test/viewModel.dart';
+import 'package:language_test/get/viewModel.dart';
 
 class Page2 extends StatelessWidget {
   static final routeName = '/pg2';
