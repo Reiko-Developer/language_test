@@ -23,14 +23,14 @@ class MyApp extends StatelessWidget {
           color: Colors.black,
           child: Center(
             child: Container(
-              width: 340,
+              width: 400,
               height: 600,
               child: CustomPaint(
                 painter: Test(
                   borderWidth: 20,
-                  cornersRadius: 20,
+                  cornersRadius: 10,
                   borderSize: 80,
-                  dotsRadius: 15,
+                  dotsRadius: 10,
                 ),
               ),
             ),
@@ -76,6 +76,7 @@ class Test extends CustomPainter {
   final Color dotsColor = const Color(0xFFe6381f);
   final Radius externalRectRadius = Radius.circular(30);
   final Radius internalRectRadius = Radius.circular(20);
+  final double shadowWidth = 10;
 
   ///Applies this value as the radius of the half circle on each corner.
   ///Defaults to the value of the borderWidth.
@@ -104,6 +105,66 @@ class Test extends CustomPainter {
           ..strokeWidth = dotsRadius
           ..strokeCap = StrokeCap.round,
       );
+
+    final shadowRect = RRect.fromRectAndRadius(
+      Rect.fromLTRB(
+        borderWidth,
+        borderWidth,
+        size.width - borderWidth,
+        size.height - 2 * borderWidth,
+      ),
+      internalRectRadius,
+    );
+
+    canvas.drawShadow(
+      Path()..addRRect(shadowRect),
+      Colors.black,
+      shadowWidth,
+      false,
+    );
+
+    final innerRect = RRect.fromRectAndRadius(
+      Rect.fromLTWH(
+        borderWidth + shadowWidth,
+        borderWidth + shadowWidth,
+        size.width - 2 * (borderWidth + shadowWidth),
+        size.height - 2 * (borderWidth + shadowWidth),
+      ),
+      internalRectRadius,
+    );
+
+    canvas.drawRRect(innerRect, paint..color = Colors.yellow);
+
+    final gradient = LinearGradient(
+      colors: [
+        const Color(0xFFFFFFFF),
+        const Color(0xFFeaeaea),
+        const Color(0xFFd1d1d1),
+        const Color(0xFFaeaeae),
+        const Color(0xFF818181),
+        const Color(0xFF494949),
+        const Color(0xFF494949),
+        const Color(0xFF090909),
+      ],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      stops: [
+        0.0,
+        0.01,
+        0.02,
+        0.07,
+        0.55,
+        0.85,
+        0.93,
+        1,
+      ],
+    );
+
+    final shaderPainter = Paint()
+      ..shader = gradient.createShader(biggestRect.outerRect)
+      ..blendMode = BlendMode.softLight;
+
+    // canvas.drawRRect(biggestRect, shaderPainter);
   }
 
   //Returns the path clipping the border.
