@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:language_test/dialog/red_corners_widget.dart';
 
-class CustomGameDialog extends StatelessWidget {
-  const CustomGameDialog({
+class GameDialogWithContainers extends StatelessWidget {
+  const GameDialogWithContainers({
     Key? key,
   }) : super(key: key);
 
