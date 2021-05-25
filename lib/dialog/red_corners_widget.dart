@@ -26,30 +26,31 @@ class RedCornerPainter extends CustomPainter {
     final paint = Paint()
       ..color = Colors.red
       ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
       ..strokeWidth = strokeWidth;
 
     //TopLeft
     canvas.drawLine(
       Offset(strokeWidth / 2, strokeWidth / 2),
-      Offset(cornerSize, strokeWidth / 2),
+      Offset(cornerSize + strokeWidth / 2, strokeWidth / 2),
       paint,
     );
     canvas.drawLine(
-      Offset(strokeWidth / 2, 0),
-      Offset(strokeWidth / 2, cornerSize),
+      Offset(strokeWidth / 2, strokeWidth / 2),
+      Offset(strokeWidth / 2, cornerSize + strokeWidth / 2),
       paint,
     );
     //
     // =============
     // TopRight
     canvas.drawLine(
-      Offset(size.width - cornerSize, strokeWidth / 2),
-      Offset(size.width, strokeWidth / 2),
+      Offset(size.width - (cornerSize + strokeWidth / 2), strokeWidth / 2),
+      Offset(size.width - strokeWidth / 2, strokeWidth / 2),
       paint,
     );
     canvas.drawLine(
-      Offset(size.width - strokeWidth / 2, 0),
-      Offset(size.width - strokeWidth / 2, cornerSize),
+      Offset(size.width - strokeWidth / 2, strokeWidth / 2),
+      Offset(size.width - strokeWidth / 2, cornerSize + strokeWidth / 2),
       paint,
     );
 
@@ -62,8 +63,8 @@ class RedCornerPainter extends CustomPainter {
       paint,
     );
     canvas.drawLine(
-      Offset(strokeWidth / 2, size.height - cornerSize),
-      Offset(strokeWidth / 2, size.height),
+      Offset(strokeWidth / 2, size.height - (cornerSize + strokeWidth / 2)),
+      Offset(strokeWidth / 2, size.height - strokeWidth / 2),
       paint,
     );
 
@@ -71,14 +72,22 @@ class RedCornerPainter extends CustomPainter {
     // =============
     // BottomRight
     canvas.drawLine(
-      Offset(size.width - cornerSize, size.height - strokeWidth / 2),
-      Offset(size.width, size.height - strokeWidth / 2),
+      Offset(size.width - (cornerSize + strokeWidth / 2),
+          size.height - strokeWidth / 2),
+      Offset(size.width - strokeWidth / 2, size.height - strokeWidth / 2),
       paint,
     );
     canvas.drawLine(
-      Offset(size.width - strokeWidth / 2, size.height - cornerSize),
-      Offset(size.width - strokeWidth / 2, size.height),
+      Offset(size.width - strokeWidth / 2,
+          size.height - (cornerSize + strokeWidth / 2)),
+      Offset(size.width - strokeWidth / 2, size.height - strokeWidth / 2),
       paint,
+    );
+
+    canvas.drawCircle(
+      Offset(size.width / 2, size.height / 2),
+      size.longestSide / 2,
+      paint..color = Colors.green.withOpacity(0.4),
     );
   }
 

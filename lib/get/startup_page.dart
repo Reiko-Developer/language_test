@@ -5,10 +5,6 @@ import 'package:language_test/get/page2.dart';
 import 'package:language_test/get/viewModel.dart';
 
 class StartUpPage extends StatelessWidget {
-  onChange(bool isWaiting) {
-    print('Is waiting $isWaiting');
-  }
-
   @override
   build(BuildContext context) {
     final controller = Get.put(Controller(), permanent: true);

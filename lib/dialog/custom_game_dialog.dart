@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:language_test/dialog/red_corners_widget.dart';
 
 class CustomGameDialog extends StatelessWidget {
   const CustomGameDialog({
@@ -73,11 +74,11 @@ class CustomGameDialog extends StatelessWidget {
               ),
             ),
           ),
-          // RedCornerWidget(
-          //   Size(size.width * 0.9, size.height * 0.9),
-          //   size.width * 0.05,
-          //   Colors.green,
-          // ),
+          RedCornerWidget(
+            Size(size.width * 0.9, size.height * 0.9),
+            size.width * 0.05,
+            Colors.green,
+          ),
         ],
       ),
     );
