@@ -3,19 +3,76 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
-class TitleDialog extends CustomPainter {
-  final Color darkerColor = const Color(0xffb61c18);
+class TitleDialog extends StatelessWidget {
+  TitleDialog({
+    this.backgroundColor = const Color(0xffb61c18),
+    this.outerColor = const Color(0xffe30613),
+    this.innerColor = const Color(0xffe5221b),
+    this.child,
+  });
+
+  ///Defaults to const Color(0xFFB61C18).
+  ///
+  final Color backgroundColor;
+
+  ///Defaults to const const Color(0xFFE30613).
+  ///
+  final Color outerColor;
+
+  ///Defaults to const const Color(0xFFE5221B).
+  ///
+  final Color innerColor;
+
+  ///The child to be rendered in front of the background
+  ///
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (c, cc) => Stack(
+        alignment: Alignment.center,
+        children: [
+          CustomPaint(
+            size: Size.square(cc.biggest.shortestSide),
+            painter: TitleDialogPainter(
+              backgroundColor,
+              outerColor,
+              innerColor,
+            ),
+          ),
+          if (child != null)
+            SizedBox(
+              width: cc.biggest.shortestSide * 0.92,
+              height: cc.biggest.shortestSide * 0.46,
+              child: Center(
+                child: child!,
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class TitleDialogPainter extends CustomPainter {
+  TitleDialogPainter(this.backgroundColor, this.outerColor, this.innerColor);
+
+  final Color backgroundColor;
+  final Color outerColor;
+  final Color innerColor;
+
   @override
   void paint(ui.Canvas canvas, Size size) {
     final innerShapePath = getInnerShapePath(size);
 
-    drawOuterShadow(canvas, size);
+    // drawOuterShadow(canvas, size);
     drawDarkerColorBG(canvas, size);
-    drawFrontSaturedColor(canvas, size);
-    drawShader(canvas, size);
-    drawInnerShape(canvas, size, innerShapePath);
-    drawInnerShapeShader(canvas, size);
-    drawInnerShadow(canvas, size, innerShapePath);
+    // drawFrontSaturedColor(canvas, size);
+    // drawShader(canvas, size);
+    // drawInnerShape(canvas, size, innerShapePath);
+    // drawInnerShapeShader(canvas, size);
+    // drawInnerShadow(canvas, size, innerShapePath);
   }
 
   void drawOuterShadow(Canvas canvas, Size size) {
@@ -90,14 +147,14 @@ class TitleDialog extends CustomPainter {
       ..color = Colors.black.withOpacity(0.35)
       ..maskFilter = MaskFilter.blur(
         BlurStyle.normal,
-        convertRadiusToSigma(15),
+        _convertRadiusToSigma(15),
       );
     canvas.drawPath(transformedPath, paint);
   }
 
-  //Is used to create a MaskFilter
-  //0 is totally opaque and 180 is very disperse.
-  static double convertRadiusToSigma(double radius) {
+  ///Used to create a MaskFilter.
+  ///0 is totally opaque and 180 is very disperse.
+  static double _convertRadiusToSigma(double radius) {
     return radius * 0.57735 + 0.5;
   }
 
@@ -167,7 +224,7 @@ class TitleDialog extends CustomPainter {
       ..close();
 
     Paint paint = Paint()..style = PaintingStyle.fill;
-    paint.color = darkerColor;
+    paint.color = backgroundColor;
     canvas.drawPath(path, paint);
   }
 
@@ -236,7 +293,7 @@ class TitleDialog extends CustomPainter {
       ..close();
 
     Paint paint = Paint()..style = PaintingStyle.fill;
-    paint.color = Color(0xffe30613).withOpacity(1.0);
+    paint.color = outerColor;
     canvas.drawPath(path, paint);
   }
 
@@ -325,11 +382,13 @@ class TitleDialog extends CustomPainter {
   }
 
   void drawInnerShape(Canvas canvas, Size size, Path path) {
+    print(path.getBounds());
+    print(size);
     canvas.drawPath(
       path,
       Paint()
         ..style = PaintingStyle.fill
-        ..color = const Color(0xffe5221b),
+        ..color = innerColor,
     );
   }
 
@@ -420,6 +479,7 @@ class TitleDialog extends CustomPainter {
   ///If this is not maked the blend.mode for the shadow would applied to all
   ///the other drawings too, which we don't want.
   ///
+  ///TODO: test if the second approach is the best.
   void drawInnerShadow(Canvas canvas, Size size, Path innerShapePath) {
     final matrix1 = Matrix4.identity()..scale(0.95);
     var smallerPath = innerShapePath.transform(matrix1.storage);
@@ -440,7 +500,7 @@ class TitleDialog extends CustomPainter {
         Paint()
           ..maskFilter = MaskFilter.blur(
             BlurStyle.inner,
-            convertRadiusToSigma(10),
+            _convertRadiusToSigma(10),
           )
           ..color = Colors.black.withOpacity(0.4),
       );
@@ -448,7 +508,7 @@ class TitleDialog extends CustomPainter {
       final paint = Paint()
         ..maskFilter = MaskFilter.blur(
           BlurStyle.inner,
-          convertRadiusToSigma(50),
+          _convertRadiusToSigma(50),
         )
         ..color = Colors.black.withOpacity(0.7);
 
@@ -532,5 +592,25 @@ class TitleDialog extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    if (other.runtimeType != this.runtimeType) return false;
+
+    return other is TitleDialogPainter &&
+        other.backgroundColor == backgroundColor &&
+        other.innerColor == innerColor &&
+        other.outerColor == outerColor;
+  }
+
+  @override
+  int get hashCode => hashValues(backgroundColor, innerColor, outerColor);
+
+  @override
+  String toString() {
+    return 'TitleDialog($backgroundColor, $innerColor, $outerColor)';
   }
 }

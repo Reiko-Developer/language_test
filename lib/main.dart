@@ -19,9 +19,10 @@ class MyApp extends StatelessWidget {
           height: double.infinity,
           // color: Colors.black,
           child: Center(
-            child: CustomPaint(
-              size: Size.square(300),
-              painter: TitleDialog(),
+            child: TitleDialog(
+              child: Container(
+                  // color: Colors.green.withAlpha(90),
+                  ),
             ),
           ),
         ),
