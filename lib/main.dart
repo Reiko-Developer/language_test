@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:language_test/dialog/BoxDialog.dart';
+import 'package:language_test/dialog/box_dialog.dart';
+import 'package:language_test/dialog/title_dialog.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,10 +21,9 @@ class MyApp extends StatelessWidget {
           height: double.infinity,
           color: Colors.white,
           child: Center(
-            child: Container(
-              width: 340,
-              height: 450,
-              child: BoxDialog(),
+            child: CustomPaint(
+              size: Size.square(300),
+              painter: TitleDialog(),
             ),
           ),
         ),
