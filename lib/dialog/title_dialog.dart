@@ -65,14 +65,24 @@ class TitleDialogPainter extends CustomPainter {
   @override
   void paint(ui.Canvas canvas, Size size) {
     final innerShapePath = getInnerShapePath(size);
-
-    // drawOuterShadow(canvas, size);
+    alignShape(canvas, size);
+    drawOuterShadow(canvas, size);
     drawDarkerColorBG(canvas, size);
-    // drawFrontSaturedColor(canvas, size);
-    // drawShader(canvas, size);
-    // drawInnerShape(canvas, size, innerShapePath);
-    // drawInnerShapeShader(canvas, size);
-    // drawInnerShadow(canvas, size, innerShapePath);
+    drawFrontSaturedColor(canvas, size);
+    drawShader(canvas, size);
+    drawInnerShape(canvas, size, innerShapePath);
+    drawInnerShapeShader(canvas, size);
+    drawInnerShadow(canvas, size, innerShapePath);
+  }
+
+  ///This action is needed because the shape is slightly translated to the left.
+  ///
+  ///Translates the shape to the left by 1.15px per 100px.
+  ///
+  void alignShape(Canvas canvas, Size size) {
+    double valueToTranslateCanves = (1 + (size.width / 100).truncate()) * 1.15;
+
+    canvas.translate(-valueToTranslateCanves, 0);
   }
 
   void drawOuterShadow(Canvas canvas, Size size) {
@@ -162,13 +172,12 @@ class TitleDialogPainter extends CustomPainter {
     final path = Path()
       ..moveTo(size.width * 0.9451000, size.height * 0.3076800)
       ..cubicTo(
-        size.width * 0.8996800,
-        size.height * 0.2542600,
-        size.width * 0.8282000,
-        size.height * 0.2196800,
-        size.width * 0.7513400,
-        size.height * 0.2196800,
-      )
+          size.width * 0.8996800,
+          size.height * 0.2542600,
+          size.width * 0.8282000,
+          size.height * 0.2196800,
+          size.width * 0.7513400,
+          size.height * 0.2196800)
       ..lineTo(size.width * 0.5293400, size.height * 0.2196800)
       ..cubicTo(
           size.width * 0.5235200,
@@ -382,8 +391,6 @@ class TitleDialogPainter extends CustomPainter {
   }
 
   void drawInnerShape(Canvas canvas, Size size, Path path) {
-    print(path.getBounds());
-    print(size);
     canvas.drawPath(
       path,
       Paint()
