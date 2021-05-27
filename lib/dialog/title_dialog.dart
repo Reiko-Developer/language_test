@@ -42,11 +42,19 @@ class TitleDialog extends StatelessWidget {
             ),
           ),
           if (child != null)
+            //Makes the child-widget be the same height and width
+            //of the title-dialog without the outer shadows.
             SizedBox(
-              width: cc.biggest.shortestSide * 0.92,
-              height: cc.biggest.shortestSide * 0.46,
-              child: Center(
-                child: child!,
+              width: cc.biggest.shortestSide,
+              height: cc.biggest.shortestSide * 0.55,
+
+              ///This transformation is needed to align the center of the child-Widget
+              ///with the center of the title dialog ignoring the shadow height.
+              child: Transform.translate(
+                offset: Offset(0, -cc.biggest.shortestSide * 0.025),
+                child: Center(
+                  child: child!,
+                ),
               ),
             ),
         ],
@@ -80,9 +88,10 @@ class TitleDialogPainter extends CustomPainter {
   ///Translates the shape to the left by 1.15px per 100px.
   ///
   void alignShape(Canvas canvas, Size size) {
-    double valueToTranslateCanves = (1 + (size.width / 100).truncate()) * 1.15;
+    double valueToTranslateTheCanvas =
+        (1 + (size.width / 100).truncate()) * 1.15;
 
-    canvas.translate(-valueToTranslateCanves, 0);
+    canvas.translate(-valueToTranslateTheCanvas, 0);
   }
 
   void drawOuterShadow(Canvas canvas, Size size) {
