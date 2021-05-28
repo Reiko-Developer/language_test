@@ -27,31 +27,47 @@ class TitleDialog extends StatelessWidget {
   ///
   final Widget? child;
 
+  double getSize(BoxConstraints bc) {
+    double size = bc.maxHeight;
+    if (bc.maxHeight > bc.maxWidth) size = bc.maxWidth;
+    return size;
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (c, cc) => Stack(
+      builder: (c, bc) => Stack(
         alignment: Alignment.center,
         children: [
-          CustomPaint(
-            size: Size.square(cc.biggest.shortestSide),
-            painter: TitleDialogPainter(
-              backgroundColor,
-              outerColor,
-              innerColor,
+          Container(
+            color: Colors.purple,
+          ),
+          Center(
+            child: Container(
+              color: Colors.blue,
+              child: CustomPaint(
+                size: Size.square(getSize(bc)),
+                painter: TitleDialogPainter(
+                  backgroundColor,
+                  outerColor,
+                  innerColor,
+                ),
+              ),
             ),
           ),
           if (child != null)
-            //Makes the child-widget be the same height and width
-            //of the title-dialog without the outer shadows.
-            SizedBox(
-              width: cc.biggest.shortestSide,
-              height: cc.biggest.shortestSide * 0.55,
 
-              ///This transformation is needed to align the center of the child-Widget
-              ///with the center of the title dialog ignoring the shadow height.
-              child: Transform.translate(
-                offset: Offset(0, -cc.biggest.shortestSide * 0.025),
+            ///This transformation is needed to align the center of the child-Widget
+            ///with the center of the title dialog ignoring the shadow height.
+            ///
+            Transform.translate(
+              offset: Offset(0, -bc.biggest.shortestSide * 0.025),
+
+              ///Makes the child-widget be the same height and width
+              //of the title-dialog without the outer shadows.
+              child: Container(
+                width: bc.biggest.shortestSide,
+                height: bc.biggest.shortestSide * 0.55,
                 child: Center(
                   child: child!,
                 ),
@@ -60,6 +76,23 @@ class TitleDialog extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class TitleClipper extends CustomClipper<Rect> {
+  @override
+  Rect getClip(ui.Size size) {
+    return Rect.fromLTWH(
+      0,
+      size.height * 0.19,
+      size.width,
+      size.height * 0.65,
+    );
+  }
+
+  @override
+  bool shouldReclip(covariant TitleClipper oldClipper) {
+    return false;
   }
 }
 

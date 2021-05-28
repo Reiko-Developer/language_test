@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:language_test/dialog/title_dialog.dart';
+import 'package:language_test/dialog/game_dialog/game_dialog.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,13 +17,28 @@ class MyApp extends StatelessWidget {
         body: Container(
           width: double.infinity,
           height: double.infinity,
-          // color: Colors.black,
-          child: Center(
-            child: TitleDialog(
-              child: Container(
-                  // color: Colors.green.withAlpha(90),
-                  ),
-            ),
+          child: Test(),
+        ),
+      ),
+    );
+  }
+}
+
+class Test extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    return Center(
+      child: Container(
+        width: size.width * 0.85,
+        height: size.height * 0.85,
+        color: Colors.green,
+        child: Center(
+          child: SizedBox(
+            width: size.width * 0.8,
+            height: size.height * 0.8,
+            child: const GameDialog(),
           ),
         ),
       ),
