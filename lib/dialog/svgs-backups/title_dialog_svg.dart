@@ -3,13 +3,14 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 class TitleDialogSVG extends StatelessWidget {
+  final double widthRatio = 0.585981098109811;
   Size calculatesSize(BoxConstraints bc) {
     double width = bc.maxWidth;
-    double height = bc.maxWidth * 0.589;
+    double height = bc.maxWidth * widthRatio;
 
     if (height > bc.maxHeight) {
       height = bc.maxHeight;
-      width = height / 0.589;
+      width = height / widthRatio;
     }
 
     return Size(width, height);
@@ -18,13 +19,15 @@ class TitleDialogSVG extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (c, bc) {
-      final size = calculatesSize(bc);
-
+      print(bc);
       return SizedBox(
         child: Center(
-          child: CustomPaint(
-            size: Size(size.width, size.height),
-            painter: RPSCustomPainter(),
+          child: Container(
+            color: Colors.red,
+            child: CustomPaint(
+              size: calculatesSize(bc),
+              painter: RPSCustomPainter(),
+            ),
           ),
         ),
       );
@@ -32,430 +35,449 @@ class TitleDialogSVG extends StatelessWidget {
   }
 }
 
-//Size(WIDTH, (WIDTH*0.5892187794946472).toDouble())
 class RPSCustomPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    Path path_0 = Path();
-    path_0.moveTo(size.width * 0.9892569, size.height * 0.2568914);
-    path_0.cubicTo(
-        size.width * 0.9410076,
-        size.height * 0.1599718,
-        size.width * 0.8651279,
-        size.height * 0.09713079,
-        size.width * 0.7835230,
-        size.height * 0.09713079);
-    path_0.lineTo(size.width * 0.5477940, size.height * 0.09713079);
-    path_0.cubicTo(
-        size.width * 0.5415710,
-        size.height * 0.09713079,
-        size.width * 0.5354931,
-        size.height * 0.09758845,
-        size.width * 0.5293946,
-        size.height * 0.09829255);
-    path_0.cubicTo(
-        size.width * 0.5232960,
-        size.height * 0.09758845,
-        size.width * 0.5171766,
-        size.height * 0.09713079,
-        size.width * 0.5109951,
-        size.height * 0.09713079);
-    path_0.lineTo(size.width * 0.2752661, size.height * 0.09713079);
-    path_0.cubicTo(
-        size.width * 0.1936612,
-        size.height * 0.09713079,
-        size.width * 0.1177815,
-        size.height * 0.1599718,
-        size.width * 0.06953217,
-        size.height * 0.2568914);
-    path_0.cubicTo(
-        size.width * 0.01767345,
-        size.height * 0.3610280,
-        size.width * -0.007861782,
-        size.height * 0.5338145,
-        size.width * 0.002178066,
-        size.height * 0.7301883);
-    path_0.cubicTo(
-        size.width * 0.01221791,
-        size.height * 0.9265622,
-        size.width * 0.07612860,
-        size.height * 1.053160,
-        size.width * 0.1888695,
-        size.height * 1.053160);
-    path_0.lineTo(size.width * 0.8700234, size.height * 1.053160);
-    path_0.cubicTo(
-        size.width * 0.9826605,
-        size.height * 1.053160,
-        size.width * 1.046633,
-        size.height * 0.9265974,
-        size.width * 1.056715,
-        size.height * 0.7301883);
-    path_0.cubicTo(
-        size.width * 1.066796,
-        size.height * 0.5337793,
-        size.width * 1.041116,
-        size.height * 0.3610280,
-        size.width * 0.9892569,
-        size.height * 0.2568914);
-    path_0.close();
+    drawOuterShadow(canvas, size);
+    drawDarkerBG(canvas, size);
+    drawSaturedColor(canvas, size);
+    drawMainGradient(canvas, size);
+    drawInnerShape(canvas, size);
+    drawInnerShader(canvas, size);
+  }
+
+  //copied
+  void drawOuterShadow(Canvas canvas, Size size) {
+    Path path = Path();
+    path.moveTo(size.width * 0.9896940, size.height * 0.2891594);
+    path.cubicTo(
+        size.width * 0.9441269,
+        size.height * 0.1969970,
+        size.width * 0.8724572,
+        size.height * 0.1374371,
+        size.width * 0.7953870,
+        size.height * 0.1374371);
+    path.lineTo(size.width * 0.5727723, size.height * 0.1374371);
+    path.cubicTo(
+        size.width * 0.5668767,
+        size.height * 0.1374371,
+        size.width * 0.5611386,
+        size.height * 0.1378979,
+        size.width * 0.5553780,
+        size.height * 0.1385507);
+    path.cubicTo(
+        size.width * 0.5496175,
+        size.height * 0.1378979,
+        size.width * 0.5438569,
+        size.height * 0.1374371,
+        size.width * 0.5380063,
+        size.height * 0.1374371);
+    path.lineTo(size.width * 0.3153915, size.height * 0.1374371);
+    path.cubicTo(
+        size.width * 0.2383213,
+        size.height * 0.1374371,
+        size.width * 0.1666517,
+        size.height * 0.1971122,
+        size.width * 0.1210846,
+        size.height * 0.2891594);
+    path.cubicTo(
+        size.width * 0.07211971,
+        size.height * 0.3880419,
+        size.width * 0.04799730,
+        size.height * 0.5521293,
+        size.width * 0.05747075,
+        size.height * 0.7384509);
+    path.cubicTo(
+        size.width * 0.06694419,
+        size.height * 0.9247725,
+        size.width * 0.1272277,
+        size.height * 1.045160,
+        size.width * 0.2337984,
+        size.height * 1.045160);
+    path.lineTo(size.width * 0.8770702, size.height * 1.045160);
+    path.cubicTo(
+        size.width * 0.9834608,
+        size.height * 1.045160,
+        size.width * 1.043879,
+        size.height * 0.9249645,
+        size.width * 1.053398,
+        size.height * 0.7384509);
+    path.cubicTo(
+        size.width * 1.062916,
+        size.height * 0.5519373,
+        size.width * 1.038659,
+        size.height * 0.3880419,
+        size.width * 0.9896940,
+        size.height * 0.2891594);
+    path.close();
 
     Paint paint0Fill = Paint()..style = PaintingStyle.fill;
-    paint0Fill.color = Color.fromRGBO(97, 97, 97, 1.0).withOpacity(1.0);
-    canvas.drawPath(path_0, paint0Fill);
+    paint0Fill.color = Color(0xff616161).withOpacity(1.0);
+    canvas.drawPath(path, paint0Fill);
+  }
 
+  //copied
+  void drawDarkerBG(Canvas canvas, Size size) {
     Path path_1 = Path();
-    path_1.moveTo(size.width * 0.9802335, size.height * 0.5415948);
+    path_1.moveTo(size.width * 0.9796130, size.height * 0.2221497);
     path_1.cubicTo(
-        size.width * 0.9331251,
-        size.height * 0.4475620,
-        size.width * 0.8589878,
-        size.height * 0.3866925,
-        size.width * 0.7792706,
-        size.height * 0.3866925);
-    path_1.lineTo(size.width * 0.5490179, size.height * 0.3866925);
+        size.width * 0.9351260,
+        size.height * 0.1328674,
+        size.width * 0.8651215,
+        size.height * 0.07507392,
+        size.width * 0.7898290,
+        size.height * 0.07507392);
+    path_1.lineTo(size.width * 0.5723672, size.height * 0.07507392);
     path_1.cubicTo(
-        size.width * 0.5429815,
-        size.height * 0.3866925,
-        size.width * 0.5369867,
-        size.height * 0.3871501,
-        size.width * 0.5310333,
-        size.height * 0.3878543);
+        size.width * 0.5666742,
+        size.height * 0.07507392,
+        size.width * 0.5610036,
+        size.height * 0.07549633,
+        size.width * 0.5553780,
+        size.height * 0.07614915);
     path_1.cubicTo(
-        size.width * 0.5250799,
-        size.height * 0.3871501,
-        size.width * 0.5190850,
-        size.height * 0.3866925,
-        size.width * 0.5130487,
-        size.height * 0.3866925);
-    path_1.lineTo(size.width * 0.2827960, size.height * 0.3866925);
+        size.width * 0.5497750,
+        size.height * 0.07549633,
+        size.width * 0.5441269,
+        size.height * 0.07507392,
+        size.width * 0.5384113,
+        size.height * 0.07507392);
+    path_1.lineTo(size.width * 0.3209496, size.height * 0.07507392);
     path_1.cubicTo(
-        size.width * 0.2030787,
-        size.height * 0.3866925,
-        size.width * 0.1289415,
-        size.height * 0.4476677,
-        size.width * 0.08183306,
-        size.height * 0.5415948);
+        size.width * 0.2456571,
+        size.height * 0.07507392,
+        size.width * 0.1756526,
+        size.height * 0.1329826,
+        size.width * 0.1311656,
+        size.height * 0.2221497);
     path_1.cubicTo(
-        size.width * 0.03111523,
-        size.height * 0.6426333,
-        size.width * 0.006223046,
-        size.height * 0.8102447,
-        size.width * 0.01603472,
-        size.height * 1.000739);
+        size.width * 0.08325833,
+        size.height * 0.3181137,
+        size.width * 0.05974347,
+        size.height * 0.4772858,
+        size.width * 0.06901440,
+        size.height * 0.6581928);
     path_1.cubicTo(
-        size.width * 0.02584639,
-        size.height * 1.191234,
-        size.width * 0.08828429,
-        size.height * 1.314064,
-        size.width * 0.1982870,
-        size.height * 1.314064);
-    path_1.lineTo(size.width * 0.8637796, size.height * 1.314064);
+        size.width * 0.07828533,
+        size.height * 0.8390999,
+        size.width * 0.1372637,
+        size.height * 0.9557237,
+        size.width * 0.2411341,
+        size.height * 0.9557237);
+    path_1.lineTo(size.width * 0.8696445, size.height * 0.9557237);
     path_1.cubicTo(
-        size.width * 0.9737201,
-        size.height * 1.314064,
-        size.width * 1.036303,
-        size.height * 1.191269,
-        size.width * 1.046032,
-        size.height * 1.000739);
+        size.width * 0.9734698,
+        size.height * 0.9557237,
+        size.width * 1.032561,
+        size.height * 0.8390999,
+        size.width * 1.041764,
+        size.height * 0.6581928);
     path_1.cubicTo(
-        size.width * 1.055761,
-        size.height * 0.8102095,
-        size.width * 1.030951,
-        size.height * 0.6426333,
-        size.width * 0.9802335,
-        size.height * 0.5415948);
+        size.width * 1.050968,
+        size.height * 0.4772858,
+        size.width * 1.027520,
+        size.height * 0.3181137,
+        size.width * 0.9796130,
+        size.height * 0.2221497);
     path_1.close();
 
     Paint paint1Fill = Paint()..style = PaintingStyle.fill;
     paint1Fill.color = Color(0xffb61c18).withOpacity(1.0);
     canvas.drawPath(path_1, paint1Fill);
+  }
 
-    Path path_2 = Path();
-    path_2.moveTo(size.width * 0.9802335, size.height * 0.5102623);
-    path_2.cubicTo(
-        size.width * 0.9331251,
-        size.height * 0.4162295,
-        size.width * 0.8589878,
-        size.height * 0.3553600,
-        size.width * 0.7792706,
-        size.height * 0.3553600);
-    path_2.lineTo(size.width * 0.5490179, size.height * 0.3553600);
-    path_2.cubicTo(
-        size.width * 0.5429815,
-        size.height * 0.3553600,
-        size.width * 0.5369867,
-        size.height * 0.3558176,
-        size.width * 0.5310333,
-        size.height * 0.3564865);
-    path_2.cubicTo(
-        size.width * 0.5250799,
-        size.height * 0.3558176,
-        size.width * 0.5190850,
-        size.height * 0.3553600,
-        size.width * 0.5130487,
-        size.height * 0.3553600);
-    path_2.lineTo(size.width * 0.2827960, size.height * 0.3553600);
-    path_2.cubicTo(
-        size.width * 0.2030787,
-        size.height * 0.3553600,
-        size.width * 0.1289415,
-        size.height * 0.4163352,
-        size.width * 0.08183306,
-        size.height * 0.5102623);
-    path_2.cubicTo(
-        size.width * 0.03111523,
-        size.height * 0.6112656,
-        size.width * 0.006223046,
-        size.height * 0.7788770,
-        size.width * 0.01603472,
-        size.height * 0.9693716);
-    path_2.cubicTo(
-        size.width * 0.02584639,
-        size.height * 1.159866,
-        size.width * 0.08828429,
-        size.height * 1.282697,
-        size.width * 0.1982870,
-        size.height * 1.282697);
-    path_2.lineTo(size.width * 0.8637796, size.height * 1.282697);
-    path_2.cubicTo(
-        size.width * 0.9737201,
-        size.height * 1.282697,
-        size.width * 1.036303,
-        size.height * 1.159937,
-        size.width * 1.046032,
-        size.height * 0.9693716);
-    path_2.cubicTo(
-        size.width * 1.055761,
-        size.height * 0.7788065,
-        size.width * 1.030951,
-        size.height * 0.6112656,
-        size.width * 0.9802335,
-        size.height * 0.5102623);
-    path_2.close();
+  //copied
+  void drawSaturedColor(Canvas canvas, Size size) {
+    Path path = Path();
+    path.moveTo(size.width * 0.9796130, size.height * 0.1923889);
+    path.cubicTo(
+        size.width * 0.9351260,
+        size.height * 0.1031066,
+        size.width * 0.8651215,
+        size.height * 0.04531316,
+        size.width * 0.7898290,
+        size.height * 0.04531316);
+    path.lineTo(size.width * 0.5723672, size.height * 0.04531316);
+    path.cubicTo(
+        size.width * 0.5666742,
+        size.height * 0.04531316,
+        size.width * 0.5610036,
+        size.height * 0.04573557,
+        size.width * 0.5553780,
+        size.height * 0.04638839);
+    path.cubicTo(
+        size.width * 0.5497750,
+        size.height * 0.04573557,
+        size.width * 0.5441269,
+        size.height * 0.04531316,
+        size.width * 0.5384113,
+        size.height * 0.04531316);
+    path.lineTo(size.width * 0.3209496, size.height * 0.04531316);
+    path.cubicTo(
+        size.width * 0.2456571,
+        size.height * 0.04531316,
+        size.width * 0.1756526,
+        size.height * 0.1032218,
+        size.width * 0.1311656,
+        size.height * 0.1923889);
+    path.cubicTo(
+        size.width * 0.08325833,
+        size.height * 0.2883146,
+        size.width * 0.05974347,
+        size.height * 0.4474867,
+        size.width * 0.06901440,
+        size.height * 0.6283937);
+    path.cubicTo(
+        size.width * 0.07828533,
+        size.height * 0.8093007,
+        size.width * 0.1372637,
+        size.height * 0.9259245,
+        size.width * 0.2411341,
+        size.height * 0.9259245);
+    path.lineTo(size.width * 0.8696445, size.height * 0.9259245);
+    path.cubicTo(
+        size.width * 0.9734698,
+        size.height * 0.9259245,
+        size.width * 1.032561,
+        size.height * 0.8093391,
+        size.width * 1.041764,
+        size.height * 0.6283937);
+    path.cubicTo(
+        size.width * 1.050968,
+        size.height * 0.4474483,
+        size.width * 1.027520,
+        size.height * 0.2883146,
+        size.width * 0.9796130,
+        size.height * 0.1923889);
+    path.close();
 
     Paint paint2Fill = Paint()..style = PaintingStyle.fill;
     paint2Fill.color = Color(0xffe30613).withOpacity(1.0);
-    canvas.drawPath(path_2, paint2Fill);
+    canvas.drawPath(path, paint2Fill);
+  }
 
-    Path path_3 = Path();
-    path_3.moveTo(size.width * 0.9802335, size.height * 0.5102623);
-    path_3.cubicTo(
-        size.width * 0.9331251,
-        size.height * 0.4162295,
-        size.width * 0.8589878,
-        size.height * 0.3553600,
-        size.width * 0.7792706,
-        size.height * 0.3553600);
-    path_3.lineTo(size.width * 0.5490179, size.height * 0.3553600);
-    path_3.cubicTo(
-        size.width * 0.5429815,
-        size.height * 0.3553600,
-        size.width * 0.5369867,
-        size.height * 0.3558176,
-        size.width * 0.5310333,
-        size.height * 0.3564865);
-    path_3.cubicTo(
-        size.width * 0.5250799,
-        size.height * 0.3558176,
-        size.width * 0.5190850,
-        size.height * 0.3553600,
-        size.width * 0.5130487,
-        size.height * 0.3553600);
-    path_3.lineTo(size.width * 0.2827960, size.height * 0.3553600);
-    path_3.cubicTo(
-        size.width * 0.2030787,
-        size.height * 0.3553600,
-        size.width * 0.1289415,
-        size.height * 0.4163352,
-        size.width * 0.08183306,
-        size.height * 0.5102623);
-    path_3.cubicTo(
-        size.width * 0.03111523,
-        size.height * 0.6112656,
-        size.width * 0.006223046,
-        size.height * 0.7788770,
-        size.width * 0.01603472,
-        size.height * 0.9693716);
-    path_3.cubicTo(
-        size.width * 0.02584639,
-        size.height * 1.159866,
-        size.width * 0.08828429,
-        size.height * 1.282697,
-        size.width * 0.1982870,
-        size.height * 1.282697);
-    path_3.lineTo(size.width * 0.8637796, size.height * 1.282697);
-    path_3.cubicTo(
-        size.width * 0.9737201,
-        size.height * 1.282697,
-        size.width * 1.036303,
-        size.height * 1.159937,
-        size.width * 1.046032,
-        size.height * 0.9693716);
-    path_3.cubicTo(
-        size.width * 1.055761,
-        size.height * 0.7788065,
-        size.width * 1.030951,
-        size.height * 0.6112656,
-        size.width * 0.9802335,
-        size.height * 0.5102623);
-    path_3.close();
+  void drawMainGradient(Canvas canvas, Size size) {
+    Path path = Path();
+    path.moveTo(size.width * 0.9796130, size.height * 0.1923889);
+    path.cubicTo(
+        size.width * 0.9351260,
+        size.height * 0.1031066,
+        size.width * 0.8651215,
+        size.height * 0.04531316,
+        size.width * 0.7898290,
+        size.height * 0.04531316);
+    path.lineTo(size.width * 0.5723672, size.height * 0.04531316);
+    path.cubicTo(
+        size.width * 0.5666742,
+        size.height * 0.04531316,
+        size.width * 0.5610036,
+        size.height * 0.04573557,
+        size.width * 0.5553780,
+        size.height * 0.04638839);
+    path.cubicTo(
+        size.width * 0.5497750,
+        size.height * 0.04573557,
+        size.width * 0.5441269,
+        size.height * 0.04531316,
+        size.width * 0.5384113,
+        size.height * 0.04531316);
+    path.lineTo(size.width * 0.3209496, size.height * 0.04531316);
+    path.cubicTo(
+        size.width * 0.2456571,
+        size.height * 0.04531316,
+        size.width * 0.1756526,
+        size.height * 0.1032218,
+        size.width * 0.1311656,
+        size.height * 0.1923889);
+    path.cubicTo(
+        size.width * 0.08325833,
+        size.height * 0.2883146,
+        size.width * 0.05974347,
+        size.height * 0.4474867,
+        size.width * 0.06901440,
+        size.height * 0.6283937);
+    path.cubicTo(
+        size.width * 0.07828533,
+        size.height * 0.8093007,
+        size.width * 0.1372637,
+        size.height * 0.9259245,
+        size.width * 0.2411341,
+        size.height * 0.9259245);
+    path.lineTo(size.width * 0.8696445, size.height * 0.9259245);
+    path.cubicTo(
+        size.width * 0.9734698,
+        size.height * 0.9259245,
+        size.width * 1.032561,
+        size.height * 0.8093391,
+        size.width * 1.041764,
+        size.height * 0.6283937);
+    path.cubicTo(
+        size.width * 1.050968,
+        size.height * 0.4474483,
+        size.width * 1.027520,
+        size.height * 0.2883146,
+        size.width * 0.9796130,
+        size.height * 0.1923889);
+    path.close();
 
     Paint paint3Fill = Paint()..style = PaintingStyle.fill;
     paint3Fill.shader = ui.Gradient.linear(
-        Offset(size.width * 0.5310333, size.height * -43.98169),
-        Offset(size.width * 0.5310333, size.height * 1.214751), [
-      Color(0xffffffff).withOpacity(1),
-      Color(0xff575757).withOpacity(1),
-      Color(0xff000000).withOpacity(1)
-    ], [
-      0.63,
-      0.87,
-      1
-    ]);
-    canvas.drawPath(path_3, paint3Fill);
+      Offset(size.width * 0.5555581, 0),
+      Offset(size.width * 0.5555581, size.height),
+      [
+        Color(0xffffffff).withOpacity(0.1),
+        Color(0xff575757).withOpacity(0.1),
+        Color(0xff000000).withOpacity(0.1)
+      ],
+      [0.63, 0.87, 1],
+    );
+    canvas.drawPath(path, paint3Fill);
+  }
 
+  void drawInnerShape(Canvas canvas, Size size) {
     Path path_4 = Path();
-    path_4.moveTo(size.width * 0.9263005, size.height * 0.5597606);
+    path_4.moveTo(size.width * 0.9286904, size.height * 0.2394301);
     path_4.cubicTo(
-        size.width * 0.8848135,
-        size.height * 0.4807956,
-        size.width * 0.8196167,
-        size.height * 0.4295018,
-        size.width * 0.7494622,
-        size.height * 0.4295018);
-    path_4.lineTo(size.width * 0.5468398, size.height * 0.4295018);
+        size.width * 0.8894914,
+        size.height * 0.1644330,
+        size.width * 0.8279253,
+        size.height * 0.1157022,
+        size.width * 0.7616787,
+        size.height * 0.1157022);
+    path_4.lineTo(size.width * 0.5704095, size.height * 0.1157022);
     path_4.cubicTo(
-        size.width * 0.5415502,
-        size.height * 0.4295018,
-        size.width * 0.5362814,
-        size.height * 0.4298891,
-        size.width * 0.5310333,
-        size.height * 0.4304524);
+        size.width * 0.5654140,
+        size.height * 0.1157022,
+        size.width * 0.5604410,
+        size.height * 0.1160862,
+        size.width * 0.5554680,
+        size.height * 0.1166238);
     path_4.cubicTo(
-        size.width * 0.5257852,
-        size.height * 0.4298891,
-        size.width * 0.5205163,
-        size.height * 0.4295018,
-        size.width * 0.5152060,
-        size.height * 0.4295018);
-    path_4.lineTo(size.width * 0.3126044, size.height * 0.4295018);
+        size.width * 0.5505176,
+        size.height * 0.1160862,
+        size.width * 0.5455446,
+        size.height * 0.1157022,
+        size.width * 0.5405266,
+        size.height * 0.1157022);
+    path_4.lineTo(size.width * 0.3492574, size.height * 0.1157022);
     path_4.cubicTo(
-        size.width * 0.2424499,
-        size.height * 0.4295018,
-        size.width * 0.1772116,
-        size.height * 0.4806548,
-        size.width * 0.1357661,
-        size.height * 0.5597606);
+        size.width * 0.2830108,
+        size.height * 0.1157022,
+        size.width * 0.2213996,
+        size.height * 0.1642794,
+        size.width * 0.1822457,
+        size.height * 0.2394301);
     path_4.cubicTo(
-        size.width * 0.09116763,
-        size.height * 0.6445344,
-        size.width * 0.06938697,
-        size.height * 0.7850731,
-        size.width * 0.07787105,
-        size.height * 0.9451505);
+        size.width * 0.1401215,
+        size.height * 0.3200722,
+        size.width * 0.1195545,
+        size.height * 0.4533620,
+        size.width * 0.1275653,
+        size.height * 0.6053915);
     path_4.cubicTo(
-        size.width * 0.08635514,
-        size.height * 1.105228,
-        size.width * 0.1414291,
-        size.height * 1.208132,
-        size.width * 0.2382390,
-        size.height * 1.208132);
-    path_4.lineTo(size.width * 0.8238276, size.height * 1.208132);
+        size.width * 0.1355761,
+        size.height * 0.7574210,
+        size.width * 0.1876013,
+        size.height * 0.8549979,
+        size.width * 0.2790279,
+        size.height * 0.8549979);
+    path_4.lineTo(size.width * 0.8319082, size.height * 0.8549979);
     path_4.cubicTo(
-        size.width * 0.9206375,
-        size.height * 1.208132,
-        size.width * 0.9756285,
-        size.height * 1.105087,
-        size.width * 0.9841955,
-        size.height * 0.9451505);
+        size.width * 0.9233348,
+        size.height * 0.8549979,
+        size.width * 0.9752700,
+        size.height * 0.7571522,
+        size.width * 0.9833483,
+        size.height * 0.6053915);
     path_4.cubicTo(
-        size.width * 0.9927626,
-        size.height * 0.7852139,
-        size.width * 0.9708990,
-        size.height * 0.6446048,
-        size.width * 0.9263005,
-        size.height * 0.5597606);
+        size.width * 0.9914266,
+        size.height * 0.4536308,
+        size.width * 0.9707921,
+        size.height * 0.3199954,
+        size.width * 0.9286904,
+        size.height * 0.2394301);
     path_4.close();
 
     Paint paint4Fill = Paint()..style = PaintingStyle.fill;
     paint4Fill.color = Color(0xffe52518).withOpacity(1.0);
     canvas.drawPath(path_4, paint4Fill);
+  }
 
+  void drawInnerShader(Canvas canvas, Size size) {
     Path path_5 = Path();
-    path_5.moveTo(size.width * 0.9263005, size.height * 0.5597606);
+    path_5.moveTo(size.width * 0.9286904, size.height * 0.2394301);
     path_5.cubicTo(
-        size.width * 0.8848135,
-        size.height * 0.4807956,
-        size.width * 0.8196167,
-        size.height * 0.4295018,
-        size.width * 0.7494622,
-        size.height * 0.4295018);
-    path_5.lineTo(size.width * 0.5468398, size.height * 0.4295018);
+        size.width * 0.8894914,
+        size.height * 0.1644330,
+        size.width * 0.8279253,
+        size.height * 0.1157022,
+        size.width * 0.7616787,
+        size.height * 0.1157022);
+    path_5.lineTo(size.width * 0.5704095, size.height * 0.1157022);
     path_5.cubicTo(
-        size.width * 0.5415502,
-        size.height * 0.4295018,
-        size.width * 0.5362814,
-        size.height * 0.4298891,
-        size.width * 0.5310333,
-        size.height * 0.4304524);
+        size.width * 0.5654140,
+        size.height * 0.1157022,
+        size.width * 0.5604410,
+        size.height * 0.1160862,
+        size.width * 0.5554680,
+        size.height * 0.1166238);
     path_5.cubicTo(
-        size.width * 0.5257852,
-        size.height * 0.4298891,
-        size.width * 0.5205163,
-        size.height * 0.4295018,
-        size.width * 0.5152060,
-        size.height * 0.4295018);
-    path_5.lineTo(size.width * 0.3126044, size.height * 0.4295018);
+        size.width * 0.5505176,
+        size.height * 0.1160862,
+        size.width * 0.5455446,
+        size.height * 0.1157022,
+        size.width * 0.5405266,
+        size.height * 0.1157022);
+    path_5.lineTo(size.width * 0.3492574, size.height * 0.1157022);
     path_5.cubicTo(
-        size.width * 0.2424499,
-        size.height * 0.4295018,
-        size.width * 0.1772116,
-        size.height * 0.4806548,
-        size.width * 0.1357661,
-        size.height * 0.5597606);
+        size.width * 0.2830108,
+        size.height * 0.1157022,
+        size.width * 0.2213996,
+        size.height * 0.1642794,
+        size.width * 0.1822457,
+        size.height * 0.2394301);
     path_5.cubicTo(
-        size.width * 0.09116763,
-        size.height * 0.6445344,
-        size.width * 0.06938697,
-        size.height * 0.7850731,
-        size.width * 0.07787105,
-        size.height * 0.9451505);
+        size.width * 0.1401215,
+        size.height * 0.3200722,
+        size.width * 0.1195545,
+        size.height * 0.4533620,
+        size.width * 0.1275653,
+        size.height * 0.6053915);
     path_5.cubicTo(
-        size.width * 0.08635514,
-        size.height * 1.105228,
-        size.width * 0.1414291,
-        size.height * 1.208132,
-        size.width * 0.2382390,
-        size.height * 1.208132);
-    path_5.lineTo(size.width * 0.8238276, size.height * 1.208132);
+        size.width * 0.1355761,
+        size.height * 0.7574210,
+        size.width * 0.1876013,
+        size.height * 0.8549979,
+        size.width * 0.2790279,
+        size.height * 0.8549979);
+    path_5.lineTo(size.width * 0.8319082, size.height * 0.8549979);
     path_5.cubicTo(
-        size.width * 0.9206375,
-        size.height * 1.208132,
-        size.width * 0.9756285,
-        size.height * 1.105087,
-        size.width * 0.9841955,
-        size.height * 0.9451505);
+        size.width * 0.9233348,
+        size.height * 0.8549979,
+        size.width * 0.9752700,
+        size.height * 0.7571522,
+        size.width * 0.9833483,
+        size.height * 0.6053915);
     path_5.cubicTo(
-        size.width * 0.9927626,
-        size.height * 0.7852139,
-        size.width * 0.9708990,
-        size.height * 0.6446048,
-        size.width * 0.9263005,
-        size.height * 0.5597606);
+        size.width * 0.9914266,
+        size.height * 0.4536308,
+        size.width * 0.9707921,
+        size.height * 0.3199954,
+        size.width * 0.9286904,
+        size.height * 0.2394301);
     path_5.close();
 
     Paint paint5Fill = Paint()..style = PaintingStyle.fill;
     paint5Fill.shader = ui.Gradient.linear(
-        Offset(size.width * 0.5310333, size.height * 0.4297131),
-        Offset(size.width * 0.5310333, size.height * 1.208203), [
-      Color(0xffffffff).withOpacity(1),
-      Color(0xff575757).withOpacity(1),
-      Color(0xff000000).withOpacity(1)
-    ], [
-      0,
-      0.65,
-      1
-    ]);
+      Offset(size.width * 0.5555806, 0),
+      Offset(size.width * 0.5555806, size.height),
+      [
+        Color(0xffffffff).withOpacity(0.3),
+        Color(0xff575757).withOpacity(0.3),
+        Color(0xff000000).withOpacity(0.3)
+      ],
+      [0, 0.65, 1],
+    );
     canvas.drawPath(path_5, paint5Fill);
   }
 

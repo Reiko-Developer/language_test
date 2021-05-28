@@ -12,18 +12,20 @@ class GameDialog extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Positioned(
-            top: cc.maxHeight * 0.2,
+            top: cc.maxHeight * 0.15,
             width: cc.maxWidth,
-            height: cc.maxHeight * 0.8,
-            child: BoxDialog(),
+            height: cc.maxHeight * 0.85,
+            child: BoxDialog(
+              child: Container(
+                  // color: Colors.purple,
+                  ),
+            ),
           ),
           Positioned(
             top: 0,
             width: cc.maxWidth * 0.6,
-            height: cc.maxHeight * 0.4,
-            child: TitleDialog(
-              child: Container(),
-            ),
+            height: cc.maxHeight * 0.3,
+            child: TitleDialog(),
           ),
         ],
       ),

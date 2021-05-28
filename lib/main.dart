@@ -33,14 +33,7 @@ class Test extends StatelessWidget {
       child: Container(
         width: size.width * 0.85,
         height: size.height * 0.85,
-        color: Colors.green,
-        child: Center(
-          child: SizedBox(
-            width: size.width * 0.8,
-            height: size.height * 0.8,
-            child: const GameDialog(),
-          ),
-        ),
+        child: const GameDialog(),
       ),
     );
   }

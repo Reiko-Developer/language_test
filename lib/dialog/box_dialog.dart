@@ -264,7 +264,8 @@ class BoxDialogPainter extends CustomPainter {
       ..shader = gradient.createShader(rect)
       ..blendMode = BlendMode.softLight;
 
-    canvas.drawRect(rect, shaderPainter);
+    canvas.drawRRect(
+        RRect.fromRectAndRadius(rect, externalRectCornerRadius), shaderPainter);
   }
 
   void drawInternalRectOpacity(Canvas canvas, Size size) {
