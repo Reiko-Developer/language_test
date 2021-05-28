@@ -53,11 +53,14 @@ class BoxDialog extends StatelessWidget {
     required this.child,
   });
 
+  ///Defaults to 20px;
   final double borderWidth;
   final double externalRectCornerRadius;
   final double internalRectCornerRadius;
   final Color mainColor;
   final double cornerEllipsisElevation;
+
+  ///Defaults to borderWidth * 0.25;
   final double shadowWidth;
 
   //Corners section
@@ -143,47 +146,19 @@ class BoxDialog extends StatelessWidget {
 }
 
 class BoxDialogPainter extends CustomPainter {
-  factory BoxDialogPainter({
-    required Color mainColor,
-    required double borderWidth,
-    required double cornerSize,
-    required double cornerEllipsisElevation,
-    required double? cornersDecorationRadius,
-    required Color cornersDecorationColor,
-    required Radius externalRectCornerRadius,
-    required Radius internalRectCornerRadius,
-    required double shadowWidth,
-    required Color cornersColor,
-    required StrokeCap cornersDecorationStrokeCap,
-  }) {
-    return BoxDialogPainter._internal(
-      mainColor,
-      cornerSize,
-      cornerEllipsisElevation,
-      borderWidth,
-      externalRectCornerRadius,
-      internalRectCornerRadius,
-      shadowWidth,
-      cornersColor,
-      cornersDecorationRadius,
-      cornersDecorationColor,
-      cornersDecorationStrokeCap,
-    );
-  }
-
-  BoxDialogPainter._internal(
-    this.mainColor,
-    this.cornerSize,
-    this.cornerEllipsisElevation,
-    this.borderWidth,
-    this.externalRectCornerRadius,
-    this.internalRectCornerRadius,
-    this.shadowWidth,
-    this.cornersColor,
-    this.cornerDecorationRadius,
-    this.cornerDecorationColor,
-    this.cornerDecorationStrokeCap,
-  );
+  BoxDialogPainter({
+    required this.mainColor,
+    required this.cornerSize,
+    required this.cornerEllipsisElevation,
+    required this.borderWidth,
+    required this.externalRectCornerRadius,
+    required this.internalRectCornerRadius,
+    required this.shadowWidth,
+    required this.cornersColor,
+    required this.cornersDecorationRadius,
+    required this.cornersDecorationColor,
+    required this.cornersDecorationStrokeCap,
+  });
 
   final Color mainColor;
 
@@ -205,9 +180,9 @@ class BoxDialogPainter extends CustomPainter {
   final double cornerEllipsisElevation;
 
   ///Dots section
-  final double? cornerDecorationRadius;
-  final Color cornerDecorationColor;
-  final StrokeCap cornerDecorationStrokeCap;
+  final double? cornersDecorationRadius;
+  final Color cornersDecorationColor;
+  final StrokeCap cornersDecorationStrokeCap;
 
   void paint(Canvas canvas, Size size) {
     drawMainBackgroundColor(canvas, size);
@@ -335,12 +310,13 @@ class BoxDialogPainter extends CustomPainter {
   }
 
   void drawPoints(Canvas canvas, Size size) {
-    if (cornerDecorationRadius == null || cornerDecorationRadius! <= 0) return;
+    if (cornersDecorationRadius == null || cornersDecorationRadius! <= 0)
+      return;
 
     final paint = Paint()
-      ..color = cornerDecorationColor
-      ..strokeWidth = cornerDecorationRadius!
-      ..strokeCap = cornerDecorationStrokeCap
+      ..color = cornersDecorationColor
+      ..strokeWidth = cornersDecorationRadius!
+      ..strokeCap = cornersDecorationStrokeCap
       ..style = PaintingStyle.stroke;
     final points = [
       Offset(borderWidth / 2, cornerSize - borderWidth / 2),

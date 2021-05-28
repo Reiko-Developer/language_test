@@ -22,9 +22,6 @@ class TitleDialog extends StatelessWidget {
   ///
   final Color innerColor;
 
-  ///The correct ratio for the title custom Painter size.
-  final double _widthRatio = 0.585981098109811;
-
   final TextStyle titleTextStyle = TextStyle(
     fontWeight: FontWeight.w800,
     color: Colors.yellow,
@@ -37,22 +34,8 @@ class TitleDialog extends StatelessWidget {
     ],
   );
 
-  Size getPainterSize(BoxConstraints bc) {
-    double width = bc.maxWidth;
-    double height = bc.maxWidth * _widthRatio;
-
-    if (height > bc.maxHeight) {
-      height = bc.maxHeight;
-      width = height / _widthRatio;
-    }
-
-    return Size(width, height);
-  }
-
   Size getTextContainerdSize(BoxConstraints bc) {
-    final painterSize = getPainterSize(bc);
-
-    return Size(painterSize.width * 0.75, painterSize.height * 0.7);
+    return Size(bc.maxWidth * 0.75, bc.maxHeight * 0.7);
   }
 
   @override
@@ -61,17 +44,13 @@ class TitleDialog extends StatelessWidget {
       builder: (c, bc) => Stack(
         alignment: Alignment.center,
         children: [
-          // Container(color: Colors.green),
           Center(
-            child: Container(
-              // color: Colors.white,
-              child: CustomPaint(
-                size: getPainterSize(bc),
-                painter: TitleDialogPainter(
-                  backgroundColor,
-                  outerColor,
-                  innerColor,
-                ),
+            child: CustomPaint(
+              size: Size(bc.maxWidth, bc.maxHeight),
+              painter: TitleDialogPainter(
+                backgroundColor,
+                outerColor,
+                innerColor,
               ),
             ),
           ),
