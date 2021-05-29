@@ -5,13 +5,13 @@ import 'dart:ui' as ui;
 //Made by Luigi Rosso
 //https://github.com/luigi-rosso/flutter-inner-shadow/blob/master/lib/inner_shadow.dart
 //
-class InnerShadow extends SingleChildRenderObjectWidget {
-  const InnerShadow({
+class LuigiInnerShadow extends SingleChildRenderObjectWidget {
+  const LuigiInnerShadow({
     Key? key,
     required this.color,
     required this.blur,
     required this.offset,
-    Widget? child,
+    required Widget child,
   }) : super(key: key, child: child);
 
   final Color color;

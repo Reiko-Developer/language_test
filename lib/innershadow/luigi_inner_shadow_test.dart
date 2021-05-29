@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'inner_shadow.dart';
+import 'luigi_inner_shadow.dart';
 
-class InnerShadowTest extends StatefulWidget {
-  InnerShadowTest({Key? key}) : super(key: key);
+class LuigiInnerShadowTest extends StatefulWidget {
+  LuigiInnerShadowTest({Key? key}) : super(key: key);
 
   @override
-  _InnerShadowTestState createState() => _InnerShadowTestState();
+  _LuigiInnerShadowTestState createState() => _LuigiInnerShadowTestState();
 }
 
-class _InnerShadowTestState extends State<InnerShadowTest> {
+class _LuigiInnerShadowTestState extends State<LuigiInnerShadowTest> {
   double blur = 10;
   double offsetX = 10;
   double offsetY = 10;
@@ -26,7 +26,7 @@ class _InnerShadowTestState extends State<InnerShadowTest> {
           children: [
             Container(
               height: 400,
-              child: InnerShadow(
+              child: LuigiInnerShadow(
                 color: Colors.black,
                 offset: Offset(offsetX, offsetY),
                 blur: blur,
