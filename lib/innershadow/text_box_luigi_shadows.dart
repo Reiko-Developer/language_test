@@ -8,17 +8,15 @@ class TextBoxLuigiShadows extends SingleChildRenderObjectWidget {
     Key? key,
     required this.color,
     required this.blur,
-    required this.offset,
     required Widget child,
   }) : super(key: key, child: child);
 
   final Color color;
   final double blur;
-  final Offset offset;
 
   @override
   RenderInnerShadow createRenderObject(BuildContext context) {
-    return RenderInnerShadow(color, blur, offset);
+    return RenderInnerShadow(color, blur);
   }
 
   @override
@@ -26,22 +24,19 @@ class TextBoxLuigiShadows extends SingleChildRenderObjectWidget {
       BuildContext context, RenderInnerShadow renderObject) {
     renderObject
       ..color = color
-      ..blur = blur
-      ..offset = offset;
+      ..blur = blur;
   }
 }
 
 class RenderInnerShadow extends RenderProxyBox {
   RenderInnerShadow(
     this._color,
-    this._blur,
-    this._offset, {
+    this._blur, {
     RenderBox? child,
   }) : super(child);
 
   Color _color;
   double _blur;
-  Offset _offset;
 
   @override
   bool get alwaysNeedsCompositing => child != null;
@@ -60,19 +55,12 @@ class RenderInnerShadow extends RenderProxyBox {
     markNeedsPaint();
   }
 
-  Offset get offset => _offset;
-  set offset(Offset value) {
-    if (_offset == value) return;
-    _offset = value;
-    markNeedsPaint();
-  }
-
-  final externalRadius = Radius.circular(20);
-  final innerRectRadius = Radius.circular(15);
-
   void paint(PaintingContext context, Offset offset) {
     if (child == null) return;
-    //Luigi's code
+    drawShadow(context, offset);
+  }
+
+  void drawShadow(PaintingContext context, Offset offset) {
     var layerPaint = Paint()..color = Colors.white;
 
     context.canvas.saveLayer(offset & size, layerPaint);
@@ -88,90 +76,26 @@ class RenderInnerShadow extends RenderProxyBox {
 
     // Invert the alpha to compute inner part.
     var invertPaint = Paint()
-      ..colorFilter = const ColorFilter.matrix([
-        1, 0, 0, 0, 0, //
-        0, 1, 0, 0, 0, //
-        0, 0, 1, 0, 0, //
-        0, 0, 0, -1, 255, //
-      ]);
+      ..colorFilter = const ColorFilter.matrix(
+        [
+          1, 0, 0, 0, 0, //
+          0, 1, 0, 0, 0, //
+          0, 0, 1, 0, 0, //
+          0, 0, 0, -1, 255, //
+        ],
+      );
+
+    ///This layer will erase the shadow layer.
     context.canvas.saveLayer(offset & size, invertPaint);
-    context.canvas.translate(_offset.dy, _offset.dx);
+    context.canvas.scale(0.9);
+    context.canvas.translate(size.width * 0.05, size.height * 0.05);
+
+    //This paints the child on top of the canvas and mix it with the shadows layer.
     context.paintChild(child!, offset);
 
-    //Second shadow
-    // context.canvas.saveLayer(offset & size, invertPaint);
-    // context.canvas.translate(_offset.dy, _offset.dx);
-    // context.paintChild(child!, offset);
-
-    //
     context.canvas.restore();
     context.canvas.restore();
     context.canvas.restore();
-    context.canvas.restore();
-
-    //end luigi's code
-    final paintingSpace = offset & size;
-
-    // final paint = Paint();
-    // canvas.drawRRect(
-    //   RRect.fromRectAndRadius(rect, externalRadius),
-    //   paint
-    //     ..color = const Color(0xffEB6109)
-    //     ..shader = null,
-    // );
-
-    // canvas.saveLayer(rect, paint..blendMode = BlendMode.softLight);
-
-    // canvas.drawRRect(
-    //   RRect.fromRectAndRadius(rect, externalRadius),
-    //   paint
-    //     ..shader = LinearGradient(
-    //       colors: [
-    //         const Color(0xff000000),
-    //         const Color(0xffffffff),
-    //       ],
-    //       begin: Alignment.topCenter,
-    //       end: Alignment.bottomCenter,
-    //     ).createShader(rect),
-    // );
-
-    // canvas.restore();
-
-    final double sideBordersWidth = paintingSpace.shortestSide * 0.2;
-    final double topBotBordersWidth = sideBordersWidth * 0.4;
-
-    final innerRect = Rect.fromLTWH(
-      paintingSpace.left + sideBordersWidth,
-      paintingSpace.top + topBotBordersWidth,
-      paintingSpace.width - 2 * sideBordersWidth,
-      paintingSpace.height - 2 * topBotBordersWidth,
-    );
-
-    var moreOpaqueInnerRect = RRect.fromRectAndRadius(
-      Rect.fromLTWH(
-        innerRect.left + sideBordersWidth,
-        innerRect.top + topBotBordersWidth,
-        innerRect.width - 2 * sideBordersWidth,
-        innerRect.height - topBotBordersWidth,
-      ),
-      Radius.circular(10),
-    );
-
-    //TODO: apply Luigi's innerShadow
-    context.canvas.drawDRRect(
-      RRect.fromRectAndRadius(innerRect, innerRectRadius),
-      moreOpaqueInnerRect,
-      Paint()
-        ..color = Colors.black
-        ..maskFilter = MaskFilter.blur(
-          BlurStyle.inner,
-          convertRadiusToSigma(20),
-        ),
-    );
-  }
-
-  static double convertRadiusToSigma(double radius) {
-    return radius * 0.57735 + 0.5;
   }
 
   bool shouldRepaint(TextBoxLuigiShadows old) {

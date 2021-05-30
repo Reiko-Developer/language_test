@@ -31,11 +31,13 @@ class TextBoxesTest extends StatelessWidget {
                 width: 340,
                 child: TextBoxLuigiShadows(
                   blur: 10,
-                  color: Colors.black,
-                  offset: Offset(10, 0),
+                  color: Colors.black.withOpacity(0.8),
                   child: Center(
                     child: Container(
-                      color: Colors.green,
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                   ),
                 ),
