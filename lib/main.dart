@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:language_test/dialog/custom_box_shadow.dart';
 import 'package:language_test/dialog/game_dialog/game_dialog.dart';
-import 'package:language_test/innershadow/text_box_with_inner_shadows.dart';
+import 'package:language_test/innershadow/text_boxes_test.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         body: Container(
           width: double.infinity,
           height: double.infinity,
-          child: TextBoxWithInnerShadows(),
+          child: TextBoxesTest(),
         ),
       ),
     );
