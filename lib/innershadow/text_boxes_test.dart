@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:language_test/dialog/custom_box_shadow.dart';
 import 'package:language_test/innershadow/custom_text_box.dart';
-import 'package:language_test/innershadow/text_box_luigi_shadows.dart';
+import 'package:language_test/innershadow/inner_shadows.dart';
 
 import 'luigi_inner_shadow.dart';
 
@@ -27,16 +27,39 @@ class TextBoxesTest extends StatelessWidget {
             children: [
               SizedBox(height: 15),
               SizedBox(
-                height: 75,
-                width: 340,
-                child: TextBoxLuigiShadows(
+                height: 200,
+                width: 200,
+                child: InnerShadows(
                   blur: 10,
-                  color: Colors.black.withOpacity(0.8),
+                  shadowHeight: 0.3,
+                  shadowWidth: 0.1,
                   child: Center(
                     child: Container(
+                      width: 150,
+                      height: 150,
                       decoration: BoxDecoration(
                         color: Colors.green,
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(45),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 15),
+              SizedBox(
+                height: 200,
+                width: 200,
+                child: InnerShadows(
+                  blur: 10,
+                  shadowHeight: 0.5,
+                  shadowWidth: 0.2,
+                  child: Center(
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      // color: Colors.red,
+                      child: CustomPaint(
+                        painter: CustomShape(),
                       ),
                     ),
                   ),
@@ -159,5 +182,28 @@ class TextBoxesTest extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class CustomShape extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.yellow
+      ..strokeWidth = 10;
+
+    final path = Path()
+      ..moveTo(0, 0)
+      ..lineTo(size.width, 0)
+      ..lineTo(size.width, size.height)
+      ..lineTo(size.width * 0.5, size.height * 0.2)
+      ..lineTo(0, size.height)
+      ..close();
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter old) {
+    return true;
   }
 }
