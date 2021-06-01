@@ -19,7 +19,6 @@ class TitleSVG extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (c, bc) {
-      print(bc);
       return SizedBox(
         child: Center(
           child: Container(

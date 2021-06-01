@@ -1,5 +1,69 @@
 import 'package:flutter/material.dart';
 
+class DialogBoxText extends StatelessWidget {
+  const DialogBoxText({
+    required this.title,
+    required this.text,
+    Key? key,
+  }) : super(key: key);
+
+  final String title;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Spacer(),
+            Expanded(
+              flex: 3,
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: const Color(0xFF9B1313),
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+            ),
+            Spacer(),
+          ],
+        ),
+        Expanded(
+          child: Stack(
+            children: [
+              CustomPaint(
+                size: Size.infinite,
+                painter: CustomTextBox(),
+              ),
+              SizedBox.fromSize(
+                size: Size.infinite,
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                    child: Text(
+                      text,
+                      style: TextStyle(
+                        color: const Color(0xFFFFFFFF),
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class CustomTextBox extends CustomPainter {
   final externalRadius = Radius.circular(20);
   final innerRectRadius = Radius.circular(15);

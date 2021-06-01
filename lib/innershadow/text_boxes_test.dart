@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+
 import 'package:language_test/dialog/custom_box_shadow.dart';
-import 'package:language_test/dialog/svgs-backups/button_svg.dart';
-import 'package:language_test/innershadow/custom_text_box.dart';
+import 'package:language_test/dialog/dialog_box_text.dart';
 import 'package:language_test/innershadow/inner_shadows.dart';
 
 import 'luigi_inner_shadow.dart';
