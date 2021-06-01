@@ -2,7 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
-class TitleDialogSVG extends StatelessWidget {
+class TitleSVG extends StatelessWidget {
   final double widthRatio = 0.585981098109811;
   Size calculatesSize(BoxConstraints bc) {
     double width = bc.maxWidth;

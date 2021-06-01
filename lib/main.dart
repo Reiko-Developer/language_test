@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:language_test/dialog/custom_box_shadow.dart';
+import 'package:language_test/dialog/dialog_button.dart';
 import 'package:language_test/dialog/game_dialog/game_dialog.dart';
+import 'package:language_test/dialog/svgs-backups/button_svg.dart';
 import 'package:language_test/innershadow/text_boxes_test.dart';
 
 void main() {
@@ -19,7 +21,8 @@ class MyApp extends StatelessWidget {
         body: Container(
           width: double.infinity,
           height: double.infinity,
-          child: TextBoxesTest(),
+          color: Colors.black87,
+          child: Test(),
         ),
       ),
     );
@@ -35,7 +38,8 @@ class Test extends StatelessWidget {
       child: Container(
         width: size.width * 0.85,
         height: size.height * 0.85,
-        child: const GameDialog(),
+        // child: const GameDialog(),
+        child: DialogButton(),
       ),
     );
   }

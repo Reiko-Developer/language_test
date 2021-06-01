@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:language_test/dialog/box_dialog.dart';
+import 'package:language_test/dialog/svgs-backups/button_svg.dart';
 import 'package:language_test/dialog/title_dialog.dart';
+import 'package:language_test/innershadow/custom_text_box.dart';
+import 'package:language_test/innershadow/inner_shadows.dart';
 
 class GameDialog extends StatelessWidget {
   const GameDialog();
@@ -104,23 +107,35 @@ class GameDialog extends StatelessWidget {
                   ),
                   Expanded(
                     flex: 2,
-                    child: Container(color: Colors.red),
+                    child: DialogBoxText(
+                      title: 'YOUR SCORE',
+                      text: '5590124',
+                    ),
                   ),
                   Expanded(
                     flex: 2,
-                    child: Container(color: Colors.white),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: const DialogBoxText(
+                            title: 'Coins',
+                            text: '99124',
+                          ),
+                        ),
+                        SizedBox(width: bc.maxWidth * 0.015),
+                        Expanded(
+                          child: const DialogBoxText(
+                            title: 'Gems',
+                            text: '1',
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(color: Colors.red),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(color: Colors.white),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Container(color: Colors.red),
+                  SizedBox(height: 30),
+                  CustomPaint(
+                    size: Size(300, 300 * .3088),
+                    painter: ButtonSVG(),
                   ),
                   Expanded(
                     flex: 2,
@@ -132,6 +147,70 @@ class GameDialog extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+class DialogBoxText extends StatelessWidget {
+  const DialogBoxText({
+    required this.title,
+    required this.text,
+    Key? key,
+  }) : super(key: key);
+
+  final String title;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Spacer(),
+            Expanded(
+              flex: 3,
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: const Color(0xFF9B1313),
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+            ),
+            Spacer(),
+          ],
+        ),
+        Expanded(
+          child: Stack(
+            children: [
+              CustomPaint(
+                size: Size.infinite,
+                painter: CustomTextBox(),
+              ),
+              SizedBox.fromSize(
+                size: Size.infinite,
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                    child: Text(
+                      text,
+                      style: TextStyle(
+                        color: const Color(0xFFFFFFFF),
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
