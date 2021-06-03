@@ -10,7 +10,7 @@ import 'luigi_inner_shadow.dart';
 
 ///Doesn't work well on web even with CanvasKit.
 class TextBoxesTest extends StatelessWidget {
-  TextBoxesTest({Key? key}) : super(key: key);
+  const TextBoxesTest({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

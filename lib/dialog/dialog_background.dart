@@ -91,7 +91,7 @@ class DialogBackground extends StatelessWidget {
               width: cc.maxWidth,
               height: cc.maxHeight,
               child: CustomPaint(
-                painter: BoxDialogPainter(
+                painter: _DialogBackgroundPainter(
                   borderWidth: borderWidth,
                   cornerEllipsisElevation: cornerEllipsisElevation,
                   cornerSize: cornersSize,
@@ -145,8 +145,8 @@ class DialogBackground extends StatelessWidget {
   }
 }
 
-class BoxDialogPainter extends CustomPainter {
-  BoxDialogPainter({
+class _DialogBackgroundPainter extends CustomPainter {
+  _DialogBackgroundPainter({
     required this.mainColor,
     required this.cornerSize,
     required this.cornerEllipsisElevation,
@@ -462,7 +462,7 @@ class BoxDialogPainter extends CustomPainter {
     );
   }
 
-  bool shouldRepaint(BoxDialogPainter old) {
+  bool shouldRepaint(_DialogBackgroundPainter old) {
     return true;
   }
 }
