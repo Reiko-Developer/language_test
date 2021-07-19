@@ -28,31 +28,39 @@ class RenderCustomColumn extends RenderBox
       child.parentData = CustomColumnParentData();
   }
 
-  @override
-  void performLayout() {
+  Size _performeLayout(
+      {required BoxConstraints constraints, required bool dry}) {
     double width = 0, height = 0;
 
     int totalFlex = 0;
     RenderBox? lastFlexChild;
 
-    //Laying outthe fixed height children.
+    //Laying out the fixed height children.
     RenderBox? child = firstChild;
     while (child != null) {
       final childParentData = child.parentData as CustomColumnParentData;
-
       final flex = childParentData.flex ?? 0;
 
       if (flex > 0) {
         totalFlex += flex;
         lastFlexChild = child;
       } else {
-        child.layout(
-          BoxConstraints(maxWidth: constraints.maxWidth),
-          parentUsesSize: true,
-        );
+        late final Size childSize;
+        if (!dry) {
+          child.layout(
+            BoxConstraints(maxWidth: constraints.maxWidth),
+            parentUsesSize: true,
+          );
 
-        height += child.size.height;
-        width = max(width, child.size.width);
+          childSize = child.size;
+        } else {
+          childSize = child.getDryLayout(
+            BoxConstraints(maxWidth: constraints.maxWidth),
+          );
+        }
+
+        height += childSize.height;
+        width = max(width, childSize.width);
       }
 
       child = childParentData.nextSibling;
@@ -68,24 +76,44 @@ class RenderCustomColumn extends RenderBox
 
       if (flex > 0) {
         final childHeight = flexHeight * flex;
-        child.layout(
-          BoxConstraints(
-            minHeight: childHeight,
-            maxHeight: childHeight,
-            maxWidth: constraints.maxWidth,
-          ),
-          parentUsesSize: true,
-        );
+        late final Size childSize;
+        if (!dry) {
+          child.layout(
+            BoxConstraints(
+              minHeight: childHeight,
+              maxHeight: childHeight,
+              maxWidth: constraints.maxWidth,
+            ),
+            parentUsesSize: true,
+          );
 
-        height += childHeight;
-        width = max(width, child.size.width);
+          childSize = child.size;
+        } else {
+          childSize = child.getDryLayout(
+            BoxConstraints(
+              minHeight: childHeight,
+              maxHeight: childHeight,
+              maxWidth: constraints.maxWidth,
+            ),
+          );
+        }
+
+        height += childSize.height;
+        width = max(width, childSize.width);
       }
 
       child = childParentData.previousSibling;
     }
 
+    return Size(width, height);
+  }
+
+  @override
+  void performLayout() {
+    size = _performeLayout(constraints: constraints, dry: false);
+
     //Positioning the children.
-    child = firstChild;
+    RenderBox? child = firstChild;
     var childOffset = Offset.zero;
 
     while (child != null) {
@@ -96,8 +124,11 @@ class RenderCustomColumn extends RenderBox
 
       child = childParentData.nextSibling;
     }
+  }
 
-    size = Size(width, height);
+  //It's not needed in almost cases, but in some cases if you don't implement it your widget will throw error.
+  Size computeDryLayout(BoxConstraints constraints) {
+    return _performeLayout(constraints: constraints, dry: true);
   }
 
   @override
