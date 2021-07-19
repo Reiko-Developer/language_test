@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:language_test/performance/custom_box.dart';
 import 'package:language_test/performance/custom_column.dart';
 import 'package:language_test/performance/custom_expanded.dart';
 
@@ -33,9 +34,9 @@ class _FooState extends State<Foo> with SingleTickerProviderStateMixin {
             textAlign: TextAlign.center,
           ),
         ),
-        const CustomExpanded(
-          flex: 3,
-          child: SizedBox(),
+        const CustomBox(
+          flex: 10,
+          color: Color(0xAFDF32A4),
         ),
       ],
     );
