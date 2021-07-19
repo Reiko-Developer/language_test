@@ -35,8 +35,8 @@ class RenderCustomColumn extends RenderBox
     int totalFlex = 0;
     RenderBox? lastFlexChild;
 
+    //Laying outthe fixed height children.
     RenderBox? child = firstChild;
-
     while (child != null) {
       final childParentData = child.parentData as CustomColumnParentData;
 
@@ -58,8 +58,8 @@ class RenderCustomColumn extends RenderBox
       child = childParentData.nextSibling;
     }
 
+    //Distributing the remaining height to flex children.
     child = lastFlexChild;
-
     final flexHeight = (constraints.maxHeight - height) / totalFlex;
 
     while (child != null) {
@@ -84,6 +84,7 @@ class RenderCustomColumn extends RenderBox
       child = childParentData.previousSibling;
     }
 
+    //Positioning the children.
     child = firstChild;
     var childOffset = Offset.zero;
 
